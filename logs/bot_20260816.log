@@ -1,0 +1,265 @@
+2026-08-16 03:23:16 | INFO     | core.rss_collector | 🧪 Запуск теста RSS-сборщика (Censor.NET + BBC)...
+2026-08-16 03:23:16 | INFO     | core.rss_collector | 📡 Парсинг censor_net: https://censor.net/ua/rss_all
+2026-08-16 03:23:16 | WARNING  | core.rss_collector | ⚠️ Ошибка парсинга censor_net: <unknown>:69:50: undefined entity
+2026-08-16 03:23:16 | INFO     | core.rss_collector | 📡 Парсинг bbc_ukraine: https://feeds.bbci.co.uk/ukrainian/news/rss.xml
+2026-08-16 03:23:18 | INFO     | core.rss_collector | ✅ bbc_ukraine: загружено 1 релевантных новостей
+2026-08-16 03:23:18 | INFO     | core.rss_collector | 📡 Парсинг bbc_uk: https://feeds.bbci.co.uk/news/world/rss.xml
+2026-08-16 03:23:18 | INFO     | core.rss_collector | ✅ bbc_uk: загружено 3 релевантных новостей
+2026-08-16 03:23:18 | INFO     | core.rss_collector | 📡 Парсинг euronews_ua: https://ua.euronews.com/rss/
+2026-08-16 03:23:19 | WARNING  | core.rss_collector | ⚠️ Ошибка парсинга euronews_ua: <urlopen error [Errno -2] Name or service not known>
+2026-08-16 03:23:19 | INFO     | core.rss_collector | 📡 Парсинг voice_of_america: https://www.voanews.com/api/zm_nykajcuc
+2026-08-16 03:23:19 | WARNING  | core.rss_collector | ⚠️ Ошибка парсинга voice_of_america: <unknown>:2:0: syntax error
+2026-08-16 03:23:19 | INFO     | core.rss_collector | 📡 Парсинг radio_svoboda: https://www.radiosvoboda.org/api/zrwjstfgpn
+2026-08-16 03:23:20 | WARNING  | core.rss_collector | ⚠️ Ошибка парсинга radio_svoboda: <unknown>:2:0: syntax error
+2026-08-16 03:23:20 | INFO     | core.rss_collector | 📊 Всего загружено 4 релевантных новостей (пропущено 10)
+2026-08-16 03:23:20 | INFO     | core.rss_collector | ✅ Найдено 4 релевантных новостей
+2026-08-16 10:18:22 | INFO     | core.rss_collector | 🧪 Запуск теста RSS-сборщика (TSN + BBC + Укрінформ)...
+2026-08-16 10:18:22 | INFO     | core.rss_collector | 📡 Парсинг tsn: https://tsn.ua/rss/full.rss
+2026-08-16 10:18:23 | INFO     | core.rss_collector | ✅ tsn: загружено 3 релевантных новостей
+2026-08-16 10:18:23 | INFO     | core.rss_collector | 📡 Парсинг bbc_ukraine: https://feeds.bbci.co.uk/ukrainian/news/rss.xml
+2026-08-16 10:18:24 | INFO     | core.rss_collector | ✅ bbc_ukraine: загружено 2 релевантных новостей
+2026-08-16 10:18:24 | INFO     | core.rss_collector | 📡 Парсинг bbc_uk: https://feeds.bbci.co.uk/news/world/rss.xml
+2026-08-16 10:18:24 | INFO     | core.rss_collector | ✅ bbc_uk: загружено 3 релевантных новостей
+2026-08-16 10:18:24 | INFO     | core.rss_collector | 📡 Парсинг Укрінформ (HTML)...
+2026-08-16 10:18:26 | INFO     | core.rss_collector | ✅ Укрінформ: загружено 0 новостей
+2026-08-16 10:18:26 | INFO     | core.rss_collector | 📊 Всего загружено 8 релевантных новостей (пропущено 13)
+2026-08-16 10:18:26 | INFO     | core.rss_collector | ✅ Найдено 8 релевантных новостей
+2026-08-16 10:19:33 | INFO     | __main__ | 🚀 Запуск бота «НАША СТАЛЬ»
+2026-08-16 10:19:33 | INFO     | __main__ | 📌 Канал: -1004423869237
+2026-08-16 10:19:33 | INFO     | __main__ | ⏱️ Интервал постинга: 150 минут
+2026-08-16 10:19:33 | INFO     | scheduler.job_scheduler | 🚀 Запуск планировщика постинга (интервал: 150 минут)
+2026-08-16 10:19:33 | INFO     | __main__ | ✅ Планировщик запущен
+2026-08-16 10:20:33 | WARNING  | aiogram.dispatcher | Received SIGINT signal
+2026-08-16 10:20:33 | INFO     | scheduler.job_scheduler | ⏹️ Планировщик остановлен
+2026-08-16 10:20:33 | INFO     | __main__ | 👋 Бот завершил работу
+2026-08-16 10:21:24 | INFO     | __main__ | 🚀 Запуск бота «НАША СТАЛЬ»
+2026-08-16 10:21:24 | INFO     | __main__ | 📌 Канал: -1004423869237
+2026-08-16 10:21:24 | INFO     | __main__ | ⏱️ Интервал постинга: 150 минут
+2026-08-16 10:21:24 | INFO     | scheduler.job_scheduler | 🚀 Запуск планировщика постинга (интервал: 150 минут)
+2026-08-16 10:21:24 | INFO     | __main__ | ✅ Планировщик запущен
+2026-08-16 10:21:45 | INFO     | scheduler.job_scheduler | 🕐 Запуск плановой публикации...
+2026-08-16 10:21:45 | INFO     | scheduler.job_scheduler | 📡 Сбор новостей для поста...
+2026-08-16 10:21:45 | INFO     | core.rss_collector | 📡 Парсинг tsn: https://tsn.ua/rss/full.rss
+2026-08-16 10:21:46 | INFO     | core.rss_collector | ✅ tsn: загружено 1 релевантных новостей
+2026-08-16 10:21:46 | INFO     | core.rss_collector | 📡 Парсинг bbc_ukraine: https://feeds.bbci.co.uk/ukrainian/news/rss.xml
+2026-08-16 10:21:48 | INFO     | core.rss_collector | ✅ bbc_ukraine: загружено 1 релевантных новостей
+2026-08-16 10:21:48 | INFO     | core.rss_collector | 📡 Парсинг bbc_uk: https://feeds.bbci.co.uk/news/world/rss.xml
+2026-08-16 10:21:48 | INFO     | core.rss_collector | ✅ bbc_uk: загружено 1 релевантных новостей
+2026-08-16 10:21:48 | INFO     | core.rss_collector | 📡 Парсинг Укрінформ (HTML)...
+2026-08-16 10:21:50 | INFO     | core.rss_collector | ✅ Укрінформ: загружено 0 новостей
+2026-08-16 10:21:50 | INFO     | core.rss_collector | 📊 Всего загружено 3 релевантных новостей (пропущено 0)
+2026-08-16 10:21:50 | INFO     | scheduler.job_scheduler | 🔄 Обработка новости...
+2026-08-16 10:21:54 | INFO     | httpx2 | HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-16 10:21:54 | INFO     | core.news_processor | ✅ Оброблено новину: Відкриваємо пивний рай на Землі!
+2026-08-16 10:21:54 | INFO     | scheduler.job_scheduler | 📝 Форматирование поста...
+2026-08-16 10:21:54 | INFO     | scheduler.job_scheduler | ✅ Пост создан успешно
+2026-08-16 10:21:56 | INFO     | bot.dispatcher | ✅ Пост опубликован! ID сообщения: 9
+2026-08-16 10:21:56 | INFO     | scheduler.job_scheduler | ✅ Пост отправлен на публикацию
+2026-08-16 10:23:39 | WARNING  | aiogram.dispatcher | Received SIGINT signal
+2026-08-16 10:23:39 | INFO     | scheduler.job_scheduler | ⏹️ Планировщик остановлен
+2026-08-16 10:23:39 | INFO     | __main__ | 👋 Бот завершил работу
+2026-08-16 10:27:33 | INFO     | core.rss_collector | 🧪 Запуск теста RSS-сборщика (TSN + BBC + Укрінформ + Правда + Цензор)...
+2026-08-16 10:27:33 | INFO     | core.rss_collector | 📡 Парсинг tsn: https://tsn.ua/rss/full.rss
+2026-08-16 10:27:34 | INFO     | core.rss_collector | ✅ tsn: загружено 3 релевантных новостей
+2026-08-16 10:27:34 | INFO     | core.rss_collector | 📡 Парсинг bbc_ukraine: https://feeds.bbci.co.uk/ukrainian/news/rss.xml
+2026-08-16 10:27:36 | INFO     | core.rss_collector | ✅ bbc_ukraine: загружено 3 релевантных новостей
+2026-08-16 10:27:36 | INFO     | core.rss_collector | 📡 Парсинг bbc_uk: https://feeds.bbci.co.uk/news/world/rss.xml
+2026-08-16 10:27:36 | INFO     | core.rss_collector | ✅ bbc_uk: загружено 3 релевантных новостей
+2026-08-16 10:27:36 | INFO     | core.rss_collector | 📡 Парсинг pravda: https://www.pravda.com.ua/rss/
+2026-08-16 10:27:37 | WARNING  | core.rss_collector | ⚠️ Ошибка парсинга pravda: <unknown>:2:1326: not well-formed (invalid token)
+2026-08-16 10:27:37 | INFO     | core.rss_collector | 📡 Парсинг censor: https://censor.net/ua/rss
+2026-08-16 10:27:37 | WARNING  | core.rss_collector | ⚠️ Ошибка парсинга censor: <unknown>:69:50: undefined entity
+2026-08-16 10:27:37 | INFO     | core.rss_collector | 📡 Парсинг Укрінформ (HTML)...
+2026-08-16 10:27:38 | INFO     | core.rss_collector | ✅ Укрінформ: загружено 0 новостей
+2026-08-16 10:27:38 | INFO     | core.rss_collector | 📊 Всего загружено 9 релевантных новостей (пропущено 11)
+2026-08-16 10:27:38 | INFO     | core.rss_collector | ✅ Найдено 9 релевантных новостей
+2026-08-16 11:00:00 | INFO     | core.rss_collector | 🧪 Запуск теста RSS-сборщика (TSN + BBC + УНІАН)...
+2026-08-16 11:00:00 | INFO     | core.rss_collector | 📡 Парсинг tsn: https://tsn.ua/rss/full.rss
+2026-08-16 11:00:00 | INFO     | core.rss_collector | ✅ tsn: загружено 3 релевантных новостей
+2026-08-16 11:00:00 | INFO     | core.rss_collector | 📡 Парсинг bbc_ukraine: https://feeds.bbci.co.uk/ukrainian/news/rss.xml
+2026-08-16 11:00:02 | INFO     | core.rss_collector | ✅ bbc_ukraine: загружено 3 релевантных новостей
+2026-08-16 11:00:02 | INFO     | core.rss_collector | 📡 Парсинг bbc_uk: https://feeds.bbci.co.uk/news/world/rss.xml
+2026-08-16 11:00:03 | INFO     | core.rss_collector | ✅ bbc_uk: загружено 3 релевантных новостей
+2026-08-16 11:00:03 | INFO     | core.rss_collector | 📡 Парсинг unian: https://rss.unian.net/site/news_eng.rss
+2026-08-16 11:00:04 | INFO     | core.rss_collector | ✅ unian: загружено 0 релевантных новостей
+2026-08-16 11:00:04 | INFO     | core.rss_collector | 📡 Парсинг Укрінформ (HTML)...
+2026-08-16 11:00:05 | INFO     | core.rss_collector | ✅ Укрінформ: загружено 0 новостей
+2026-08-16 11:00:05 | INFO     | core.rss_collector | 📊 Всего загружено 9 релевантных новостей (пропущено 15)
+2026-08-16 11:00:05 | INFO     | core.rss_collector | ✅ Найдено 9 релевантных новостей
+2026-08-16 11:02:02 | INFO     | core.rss_collector | 🧪 Тест с усиленным фильтром...
+2026-08-16 11:02:02 | INFO     | core.rss_collector | 📡 Парсинг tsn: https://tsn.ua/rss/full.rss
+2026-08-16 11:02:02 | INFO     | core.rss_collector | ✅ tsn: загружено 3 релевантных новостей
+2026-08-16 11:02:02 | INFO     | core.rss_collector | 📡 Парсинг bbc_ukraine: https://feeds.bbci.co.uk/ukrainian/news/rss.xml
+2026-08-16 11:02:03 | INFO     | core.rss_collector | ✅ bbc_ukraine: загружено 2 релевантных новостей
+2026-08-16 11:02:03 | INFO     | core.rss_collector | 📡 Парсинг bbc_uk: https://feeds.bbci.co.uk/news/world/rss.xml
+2026-08-16 11:02:03 | INFO     | core.rss_collector | ✅ bbc_uk: загружено 3 релевантных новостей
+2026-08-16 11:02:03 | INFO     | core.rss_collector | 📡 Парсинг unian: https://rss.unian.net/site/news_eng.rss
+2026-08-16 11:02:05 | INFO     | core.rss_collector | ✅ unian: загружено 0 релевантных новостей
+2026-08-16 11:02:05 | INFO     | core.rss_collector | 📡 Парсинг Укрінформ (HTML)...
+2026-08-16 11:02:06 | INFO     | core.rss_collector | ✅ Укрінформ: загружено 0 новостей
+2026-08-16 11:02:06 | INFO     | core.rss_collector | 📊 Всего: 8 релевантных (пропущено 25)
+2026-08-16 11:02:06 | INFO     | core.rss_collector | ✅ Найдено 8 новостей
+2026-08-16 11:04:51 | INFO     | core.rss_collector | 🧪 Тест с усиленным фильтром...
+2026-08-16 11:04:51 | INFO     | core.rss_collector | 📡 Парсинг tsn: https://tsn.ua/rss/full.rss
+2026-08-16 11:04:51 | INFO     | core.rss_collector | ✅ tsn: загружено 3 релевантных новостей
+2026-08-16 11:04:51 | INFO     | core.rss_collector | 📡 Парсинг bbc_ukraine: https://feeds.bbci.co.uk/ukrainian/news/rss.xml
+2026-08-16 11:04:52 | INFO     | core.rss_collector | ✅ bbc_ukraine: загружено 2 релевантных новостей
+2026-08-16 11:04:52 | INFO     | core.rss_collector | 📡 Парсинг bbc_uk: https://feeds.bbci.co.uk/news/world/rss.xml
+2026-08-16 11:04:53 | INFO     | core.rss_collector | ✅ bbc_uk: загружено 3 релевантных новостей
+2026-08-16 11:04:53 | INFO     | core.rss_collector | 📡 Парсинг unian: https://rss.unian.net/site/news_eng.rss
+2026-08-16 11:04:54 | INFO     | core.rss_collector | ✅ unian: загружено 0 релевантных новостей
+2026-08-16 11:04:54 | INFO     | core.rss_collector | 📡 Парсинг dw: https://rss.dw.com/rdf/rss-en-all
+2026-08-16 11:04:54 | INFO     | core.rss_collector | ✅ dw: загружено 3 релевантных новостей
+2026-08-16 11:04:54 | INFO     | core.rss_collector | 📡 Парсинг Укрінформ (HTML)...
+2026-08-16 11:04:56 | INFO     | core.rss_collector | ✅ Укрінформ: загружено 0 новостей
+2026-08-16 11:04:56 | INFO     | core.rss_collector | 📊 Всего: 11 релевантных (пропущено 31)
+2026-08-16 11:04:56 | INFO     | core.rss_collector | ✅ Найдено 11 новостей
+2026-08-16 11:07:43 | INFO     | core.rss_collector | 🧪 Тест с усиленным фильтром...
+2026-08-16 11:07:43 | INFO     | core.rss_collector | 📡 Парсинг tsn: https://tsn.ua/rss/full.rss
+2026-08-16 11:07:43 | INFO     | core.rss_collector | ✅ tsn: загружено 3 релевантных новостей
+2026-08-16 11:07:43 | INFO     | core.rss_collector | 📡 Парсинг bbc_ukraine: https://feeds.bbci.co.uk/ukrainian/news/rss.xml
+2026-08-16 11:07:44 | INFO     | core.rss_collector | ✅ bbc_ukraine: загружено 2 релевантных новостей
+2026-08-16 11:07:44 | INFO     | core.rss_collector | 📡 Парсинг bbc_uk: https://feeds.bbci.co.uk/news/world/rss.xml
+2026-08-16 11:07:44 | INFO     | core.rss_collector | ✅ bbc_uk: загружено 3 релевантных новостей
+2026-08-16 11:07:44 | INFO     | core.rss_collector | 📡 Парсинг unian: https://rss.unian.net/site/news_eng.rss
+2026-08-16 11:07:45 | INFO     | core.rss_collector | ✅ unian: загружено 0 релевантных новостей
+2026-08-16 11:07:45 | INFO     | core.rss_collector | 📡 Парсинг dw: https://rss.dw.com/rdf/rss-en-all
+2026-08-16 11:07:46 | INFO     | core.rss_collector | ✅ dw: загружено 3 релевантных новостей
+2026-08-16 11:07:46 | INFO     | core.rss_collector | 📡 Парсинг guardian: https://www.theguardian.com/uk/rss
+2026-08-16 11:07:46 | INFO     | core.rss_collector | ✅ guardian: загружено 3 релевантных новостей
+2026-08-16 11:07:46 | INFO     | core.rss_collector | 📡 Парсинг aljazeera: https://www.aljazeera.com/xml/rss/all.xml
+2026-08-16 11:07:47 | INFO     | core.rss_collector | ✅ aljazeera: загружено 3 релевантных новостей
+2026-08-16 11:07:47 | INFO     | core.rss_collector | 📡 Парсинг bellingcat: https://www.bellingcat.com/feed/
+2026-08-16 11:07:47 | INFO     | core.rss_collector | ✅ bellingcat: загружено 0 релевантных новостей
+2026-08-16 11:07:47 | INFO     | core.rss_collector | 📡 Парсинг Укрінформ (HTML)...
+2026-08-16 11:07:49 | INFO     | core.rss_collector | ✅ Укрінформ: загружено 0 новостей
+2026-08-16 11:07:49 | INFO     | core.rss_collector | 📊 Всего: 17 релевантных (пропущено 56)
+2026-08-16 11:07:49 | INFO     | core.rss_collector | ✅ Найдено 17 новостей
+2026-08-16 11:12:14 | INFO     | core.rss_collector | 🧪 Тест с усиленным фильтром...
+2026-08-16 11:12:14 | INFO     | core.rss_collector | 📡 Парсинг tsn: https://tsn.ua/rss/full.rss
+2026-08-16 11:12:14 | INFO     | core.rss_collector | ✅ tsn: загружено 3 релевантных новостей
+2026-08-16 11:12:14 | INFO     | core.rss_collector | 📡 Парсинг unian: https://rss.unian.net/site/news_eng.rss
+2026-08-16 11:12:16 | INFO     | core.rss_collector | ✅ unian: загружено 0 релевантных новостей
+2026-08-16 11:12:16 | INFO     | core.rss_collector | 📡 Парсинг bbc_ukraine: https://feeds.bbci.co.uk/ukrainian/news/rss.xml
+2026-08-16 11:12:17 | INFO     | core.rss_collector | ✅ bbc_ukraine: загружено 2 релевантных новостей
+2026-08-16 11:12:17 | INFO     | core.rss_collector | 📡 Парсинг bbc_uk: https://feeds.bbci.co.uk/news/world/rss.xml
+2026-08-16 11:12:17 | INFO     | core.rss_collector | ✅ bbc_uk: загружено 3 релевантных новостей
+2026-08-16 11:12:17 | INFO     | core.rss_collector | 📡 Парсинг dw: https://rss.dw.com/rdf/rss-en-all
+2026-08-16 11:12:19 | INFO     | core.rss_collector | ✅ dw: загружено 3 релевантных новостей
+2026-08-16 11:12:19 | INFO     | core.rss_collector | 📡 Парсинг guardian: https://www.theguardian.com/uk/rss
+2026-08-16 11:12:19 | INFO     | core.rss_collector | ✅ guardian: загружено 3 релевантных новостей
+2026-08-16 11:12:19 | INFO     | core.rss_collector | 📡 Парсинг aljazeera: https://www.aljazeera.com/xml/rss/all.xml
+2026-08-16 11:12:20 | INFO     | core.rss_collector | ✅ aljazeera: загружено 3 релевантных новостей
+2026-08-16 11:12:20 | INFO     | core.rss_collector | 📡 Парсинг bellingcat: https://www.bellingcat.com/feed/
+2026-08-16 11:12:20 | INFO     | core.rss_collector | ✅ bellingcat: загружено 0 релевантных новостей
+2026-08-16 11:12:20 | INFO     | core.rss_collector | 📡 Парсинг npr: https://feeds.npr.org/1001/rss.xml
+2026-08-16 11:12:21 | INFO     | core.rss_collector | ✅ npr: загружено 1 релевантных новостей
+2026-08-16 11:12:21 | INFO     | core.rss_collector | 📡 Парсинг cnn: http://rss.cnn.com/rss/cnn_us.rss
+2026-08-16 11:12:22 | INFO     | core.rss_collector | ✅ cnn: загружено 0 релевантных новостей
+2026-08-16 11:12:22 | INFO     | core.rss_collector | 📡 Парсинг cnbc: https://www.cnbc.com/id/100003114/device/rss/rss.html
+2026-08-16 11:12:23 | INFO     | core.rss_collector | ✅ cnbc: загружено 3 релевантных новостей
+2026-08-16 11:12:23 | INFO     | core.rss_collector | 📡 Парсинг abc: http://feeds.abcnews.com/abcnews/topstories
+2026-08-16 11:12:25 | INFO     | core.rss_collector | ✅ abc: загружено 1 релевантных новостей
+2026-08-16 11:12:25 | INFO     | core.rss_collector | 📡 Парсинг nbc: http://feeds.nbcnews.com/feeds/worldnews
+2026-08-16 11:12:28 | INFO     | core.rss_collector | ✅ nbc: загружено 3 релевантных новостей
+2026-08-16 11:12:28 | INFO     | core.rss_collector | 📡 Парсинг Укрінформ (HTML)...
+2026-08-16 11:12:29 | INFO     | core.rss_collector | ✅ Укрінформ: загружено 0 новостей
+2026-08-16 11:12:29 | INFO     | core.rss_collector | 📊 Всего: 25 релевантных (пропущено 135)
+2026-08-16 11:12:29 | INFO     | core.rss_collector | ✅ Найдено 25 новостей
+2026-08-16 11:16:32 | INFO     | core.rss_collector | 🧪 Тест с усиленным фильтром...
+2026-08-16 11:16:32 | INFO     | core.rss_collector | 📡 Парсинг tsn: https://tsn.ua/rss/full.rss
+2026-08-16 11:16:32 | INFO     | core.rss_collector | ✅ tsn: загружено 3 релевантных новостей
+2026-08-16 11:16:32 | INFO     | core.rss_collector | 📡 Парсинг unian: https://rss.unian.net/site/news_eng.rss
+2026-08-16 11:16:33 | INFO     | core.rss_collector | ✅ unian: загружено 0 релевантных новостей
+2026-08-16 11:16:33 | INFO     | core.rss_collector | 📡 Парсинг bbc_ukraine: https://feeds.bbci.co.uk/ukrainian/news/rss.xml
+2026-08-16 11:16:34 | INFO     | core.rss_collector | ✅ bbc_ukraine: загружено 2 релевантных новостей
+2026-08-16 11:16:34 | INFO     | core.rss_collector | 📡 Парсинг bbc_uk: https://feeds.bbci.co.uk/news/world/rss.xml
+2026-08-16 11:16:34 | INFO     | core.rss_collector | ✅ bbc_uk: загружено 3 релевантных новостей
+2026-08-16 11:16:34 | INFO     | core.rss_collector | 📡 Парсинг dw: https://rss.dw.com/rdf/rss-en-all
+2026-08-16 11:16:36 | INFO     | core.rss_collector | ✅ dw: загружено 3 релевантных новостей
+2026-08-16 11:16:36 | INFO     | core.rss_collector | 📡 Парсинг guardian: https://www.theguardian.com/uk/rss
+2026-08-16 11:16:36 | INFO     | core.rss_collector | ✅ guardian: загружено 3 релевантных новостей
+2026-08-16 11:16:36 | INFO     | core.rss_collector | 📡 Парсинг aljazeera: https://www.aljazeera.com/xml/rss/all.xml
+2026-08-16 11:16:37 | INFO     | core.rss_collector | ✅ aljazeera: загружено 3 релевантных новостей
+2026-08-16 11:16:37 | INFO     | core.rss_collector | 📡 Парсинг bellingcat: https://www.bellingcat.com/feed/
+2026-08-16 11:16:37 | INFO     | core.rss_collector | ✅ bellingcat: загружено 0 релевантных новостей
+2026-08-16 11:16:37 | INFO     | core.rss_collector | 📡 Парсинг npr: https://feeds.npr.org/1001/rss.xml
+2026-08-16 11:16:38 | INFO     | core.rss_collector | ✅ npr: загружено 1 релевантных новостей
+2026-08-16 11:16:38 | INFO     | core.rss_collector | 📡 Парсинг cnn: http://rss.cnn.com/rss/cnn_us.rss
+2026-08-16 11:16:39 | INFO     | core.rss_collector | ✅ cnn: загружено 0 релевантных новостей
+2026-08-16 11:16:39 | INFO     | core.rss_collector | 📡 Парсинг cnbc: https://www.cnbc.com/id/100003114/device/rss/rss.html
+2026-08-16 11:16:40 | INFO     | core.rss_collector | ✅ cnbc: загружено 3 релевантных новостей
+2026-08-16 11:16:40 | INFO     | core.rss_collector | 📡 Парсинг abc: http://feeds.abcnews.com/abcnews/topstories
+2026-08-16 11:16:42 | INFO     | core.rss_collector | ✅ abc: загружено 1 релевантных новостей
+2026-08-16 11:16:42 | INFO     | core.rss_collector | 📡 Парсинг nbc: http://feeds.nbcnews.com/feeds/worldnews
+2026-08-16 11:16:45 | INFO     | core.rss_collector | ✅ nbc: загружено 3 релевантных новостей
+2026-08-16 11:16:45 | INFO     | core.rss_collector | 📡 Парсинг chinadaily: https://www.chinadaily.com.cn/rss/world_rss.xml
+2026-08-16 11:16:46 | WARNING  | core.rss_collector | ⚠️ Ошибка chinadaily: document declared as us-ascii, but parsed as utf-8
+2026-08-16 11:16:46 | INFO     | core.rss_collector | 📡 Парсинг Укрінформ (HTML)...
+2026-08-16 11:16:48 | INFO     | core.rss_collector | ✅ Укрінформ: загружено 0 новостей
+2026-08-16 11:16:48 | INFO     | core.rss_collector | 📊 Всего: 25 релевантных (пропущено 136)
+2026-08-16 11:16:48 | INFO     | core.rss_collector | ✅ Найдено 25 новостей
+2026-08-16 11:22:32 | INFO     | __main__ | 🚀 Запуск бота «НАША СТАЛЬ»
+2026-08-16 11:22:32 | INFO     | __main__ | 📌 Канал: -1004423869237
+2026-08-16 11:22:32 | INFO     | __main__ | ⏱️ Интервал постинга: 150 минут
+2026-08-16 11:22:32 | INFO     | scheduler.job_scheduler | 🚀 Запуск планировщика постинга (интервал: 150 минут)
+2026-08-16 11:22:32 | INFO     | __main__ | ✅ Планировщик запущен
+2026-08-16 11:22:45 | INFO     | scheduler.job_scheduler | 🕐 Запуск плановой публикации...
+2026-08-16 11:22:45 | INFO     | scheduler.job_scheduler | 📡 Сбор новостей для поста...
+2026-08-16 11:22:45 | INFO     | core.rss_collector | 📡 Парсинг tsn: https://tsn.ua/rss/full.rss
+2026-08-16 11:22:46 | INFO     | core.rss_collector | ✅ tsn: загружено 1 релевантных новостей
+2026-08-16 11:22:46 | INFO     | core.rss_collector | 📡 Парсинг unian: https://rss.unian.net/site/news_eng.rss
+2026-08-16 11:22:47 | INFO     | core.rss_collector | ✅ unian: загружено 0 релевантных новостей
+2026-08-16 11:22:47 | INFO     | core.rss_collector | 📡 Парсинг bbc_ukraine: https://feeds.bbci.co.uk/ukrainian/news/rss.xml
+2026-08-16 11:22:49 | INFO     | core.rss_collector | ✅ bbc_ukraine: загружено 1 релевантных новостей
+2026-08-16 11:22:49 | INFO     | core.rss_collector | 📡 Парсинг bbc_uk: https://feeds.bbci.co.uk/news/world/rss.xml
+2026-08-16 11:22:49 | INFO     | core.rss_collector | ✅ bbc_uk: загружено 1 релевантных новостей
+2026-08-16 11:22:49 | INFO     | core.rss_collector | 📡 Парсинг dw: https://rss.dw.com/rdf/rss-en-all
+2026-08-16 11:22:50 | INFO     | core.rss_collector | ✅ dw: загружено 1 релевантных новостей
+2026-08-16 11:22:50 | INFO     | core.rss_collector | 📡 Парсинг guardian: https://www.theguardian.com/uk/rss
+2026-08-16 11:22:50 | INFO     | core.rss_collector | ✅ guardian: загружено 1 релевантных новостей
+2026-08-16 11:22:50 | INFO     | core.rss_collector | 📡 Парсинг aljazeera: https://www.aljazeera.com/xml/rss/all.xml
+2026-08-16 11:22:53 | INFO     | core.rss_collector | ✅ aljazeera: загружено 1 релевантных новостей
+2026-08-16 11:22:53 | INFO     | core.rss_collector | 📡 Парсинг bellingcat: https://www.bellingcat.com/feed/
+2026-08-16 11:22:53 | INFO     | core.rss_collector | ✅ bellingcat: загружено 0 релевантных новостей
+2026-08-16 11:22:53 | INFO     | core.rss_collector | 📡 Парсинг npr: https://feeds.npr.org/1001/rss.xml
+2026-08-16 11:22:55 | INFO     | core.rss_collector | ✅ npr: загружено 1 релевантных новостей
+2026-08-16 11:22:55 | INFO     | core.rss_collector | 📡 Парсинг cnn: http://rss.cnn.com/rss/cnn_us.rss
+2026-08-16 11:22:56 | INFO     | core.rss_collector | ✅ cnn: загружено 0 релевантных новостей
+2026-08-16 11:22:56 | INFO     | core.rss_collector | 📡 Парсинг cnbc: https://www.cnbc.com/id/100003114/device/rss/rss.html
+2026-08-16 11:22:56 | INFO     | core.rss_collector | ✅ cnbc: загружено 1 релевантных новостей
+2026-08-16 11:22:56 | INFO     | core.rss_collector | 📡 Парсинг abc: http://feeds.abcnews.com/abcnews/topstories
+2026-08-16 11:22:58 | INFO     | core.rss_collector | ✅ abc: загружено 1 релевантных новостей
+2026-08-16 11:22:58 | INFO     | core.rss_collector | 📡 Парсинг nbc: http://feeds.nbcnews.com/feeds/worldnews
+2026-08-16 11:23:01 | INFO     | core.rss_collector | ✅ nbc: загружено 1 релевантных новостей
+2026-08-16 11:23:01 | INFO     | core.rss_collector | 📡 Парсинг chinadaily: https://www.chinadaily.com.cn/rss/world_rss.xml
+2026-08-16 11:23:03 | WARNING  | core.rss_collector | ⚠️ Ошибка chinadaily: document declared as us-ascii, but parsed as utf-8
+2026-08-16 11:23:03 | INFO     | core.rss_collector | 📡 Парсинг Укрінформ (HTML)...
+2026-08-16 11:23:04 | INFO     | core.rss_collector | ✅ Укрінформ: загружено 0 новостей
+2026-08-16 11:23:04 | INFO     | core.rss_collector | 📊 Всего: 10 релевантных (пропущено 58)
+2026-08-16 11:23:04 | INFO     | scheduler.job_scheduler | 🔄 Обработка новости...
+2026-08-16 11:23:08 | INFO     | httpx2 | HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-16 11:23:08 | INFO     | core.news_processor | ✅ Оброблено новину: Липень: криваві втрати окупантів шокують!
+2026-08-16 11:23:08 | INFO     | scheduler.job_scheduler | 📝 Форматирование поста...
+2026-08-16 11:23:08 | INFO     | scheduler.job_scheduler | ✅ Пост создан успешно
+2026-08-16 11:23:12 | INFO     | bot.dispatcher | ✅ Пост опубликован! ID сообщения: 10
+2026-08-16 11:23:12 | INFO     | scheduler.job_scheduler | ✅ Пост отправлен на публикацию
+2026-08-16 11:24:55 | WARNING  | aiogram.dispatcher | Received SIGINT signal
+2026-08-16 11:24:55 | INFO     | scheduler.job_scheduler | ⏹️ Планировщик остановлен
+2026-08-16 11:24:55 | INFO     | __main__ | 👋 Бот завершил работу
+2026-08-16 11:31:38 | INFO     | __main__ | 🚀 Запуск бота «НАША СТАЛЬ»
+2026-08-16 11:31:38 | INFO     | __main__ | 📌 Канал: -1004423869237
+2026-08-16 11:31:38 | INFO     | __main__ | ⏱️ Интервал постинга: 150 минут
+2026-08-16 11:31:38 | INFO     | scheduler.job_scheduler | 🚀 Запуск планировщика постинга (интервал: 150 минут)
+2026-08-16 11:31:38 | INFO     | __main__ | ✅ Планировщик запущен
+2026-08-16 11:31:56 | WARNING  | aiogram.dispatcher | Received SIGINT signal
+2026-08-16 11:31:56 | INFO     | scheduler.job_scheduler | ⏹️ Планировщик остановлен
+2026-08-16 11:31:56 | INFO     | __main__ | 👋 Бот завершил работу
+2026-08-16 11:32:57 | INFO     | __main__ | 🚀 Запуск бота «НАША СТАЛЬ»
+2026-08-16 11:32:57 | INFO     | __main__ | 📌 Канал: -1004423869237
+2026-08-16 11:32:57 | INFO     | __main__ | ⏱️ Интервал постинга: 150 минут
+2026-08-16 11:32:57 | INFO     | scheduler.job_scheduler | 🚀 Запуск планировщика постинга (интервал: 150 минут)
+2026-08-16 11:32:57 | INFO     | __main__ | ✅ Планировщик запущен
+2026-08-16 11:33:04 | WARNING  | aiogram.dispatcher | Received SIGINT signal
+2026-08-16 11:33:04 | INFO     | scheduler.job_scheduler | ⏹️ Планировщик остановлен
+2026-08-16 11:33:04 | INFO     | __main__ | 👋 Бот завершил работу
