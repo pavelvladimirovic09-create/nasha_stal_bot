@@ -33,7 +33,7 @@ KYIV_TZ = ZoneInfo("Europe/Kyiv")
 def is_working_hours() -> bool:
     now = datetime.now(KYIV_TZ)
     hour = now.hour
-    return 7 <= hour < 23
+    return 7 <= hour < 22
 
 def create_posts() -> List[dict]:
     posts = []
@@ -167,31 +167,31 @@ def start_scheduler():
     
     schedule.every(10).minutes.do(publish_posts_batch)
     schedule.every().day.at("04:00").do(clean_cache)  # Очистка кэша каждую ночь в 3:00
-    logger.info("🚀 Запуск планировщика: 3 поста каждые 10 минут (7:00-23:00 по Киеву)")
+    logger.info("🚀 Запуск планировщика: 1 пост каждые 10 минут (7:00-22:00 по Киеву)")
     
-    schedule.every().day.at("08:00").do(publish_morning)
+    schedule.every().day.at("05:00").do(publish_morning)
     logger.info("🌅 Утренний дайджест запланирован на 8:00")
     
-    schedule.every().sunday.at("20:00").do(publish_weekly_digest)
+    schedule.every().sunday.at("17:00").do(publish_weekly_digest)
     logger.info("📌 Еженедельный дайджест запланирован на воскресенье 20:00")
     
-    def is_last_sunday():
-        today = datetime.now()
-        if today.weekday() != 6:
-            return False
-        next_week = today + timedelta(days=7)
-        return next_week.month != today.month
-    
-    if is_last_sunday():
-        schedule.every().day.at("20:00").do(publish_monthly_digest)
-        logger.info("📊 Ежемесячный дайджест запланирован на сегодня 20:00")
-    else:
-        def check_monthly():
-            if is_last_sunday():
-                schedule.every().day.at("20:00").do(publish_monthly_digest)
-                logger.info("📊 Ежемесячный дайджест запланирован на сегодня 20:00")
-        schedule.every().day.at("00:00").do(check_monthly)
-        logger.info("📊 Ежемесячный дайджест будет проверяться ежедневно")
+    def check_monthly():
+        """Проверяет, сегодня ли 1-е число месяца (по Киеву).
+        Если да — публикует месячный дайджест. Вызывается каждый день в 17:00 UTC (20:00 Киев)."""
+        from zoneinfo import ZoneInfo
+        KYIV_TZ = ZoneInfo("Europe/Kyiv")
+        today = datetime.now(KYIV_TZ)
+        if today.day == 1:
+            logger.info("📊 Сегодня 1-е число — запускаю месячный дайджест")
+            try:
+                publish_monthly_digest()
+            except Exception as e:
+                logger.error(f"❌ Ошибка месячного дайджеста: {e}")
+        else:
+            logger.debug(f"📊 Месячный дайджест не сегодня (сегодня {today.day}-е)")
+
+    schedule.every().day.at("17:00").do(check_monthly)
+    logger.info("📊 Месячный дайджест: проверка каждый день в 20:00 Киев, публикация 1-го числа")
     
     while _running:
         schedule.run_pending()

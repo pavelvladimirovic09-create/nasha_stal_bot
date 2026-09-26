@@ -15,8 +15,7 @@ data/posted_links.json
 # Backups
 *.bak
 *.bak_*
-*.bak2
-*.bak3
+*.bak*
 *.py.bak
 
 # Systemd logs

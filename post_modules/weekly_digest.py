@@ -8,19 +8,38 @@ logger = get_logger(__name__)
 
 WEEKLY_FILE = "weekly_news.json"
 
-def get_weekly_news() -> List[Dict]:
-    """Загружает все новости за неделю"""
+def get_weekly_news(days: int = 7) -> List[Dict]:
+    """Загружает новости за последние N дней (по умолчанию 7)"""
     if not os.path.exists(WEEKLY_FILE):
-        logger.warning("⚠️ Файл недельного архива не найден")
+        logger.warning("⚠️ Файл архива новостей не найден")
         return []
-    
+
     try:
+        from zoneinfo import ZoneInfo
+        KYIV_TZ = ZoneInfo("Europe/Kyiv")
+        cutoff = datetime.now(KYIV_TZ) - timedelta(days=days)
+
         with open(WEEKLY_FILE, 'r') as f:
             news = json.load(f)
-        logger.info(f"📊 Загружено {len(news)} новостей за неделю")
-        return news
+
+        filtered = []
+        for item in news:
+            if not isinstance(item, dict):
+                continue
+            date_str = item.get('date', '')
+            if not date_str:
+                continue
+            try:
+                dt = datetime.strptime(date_str, '%Y-%m-%d %H:%M').replace(tzinfo=KYIV_TZ)
+                if dt >= cutoff:
+                    filtered.append(item)
+            except ValueError:
+                continue
+
+        logger.info(f"📊 Загружено {len(filtered)} новостей за {days} дней (из {len(news)} в архиве)")
+        return filtered
     except Exception as e:
-        logger.error(f"❌ Ошибка загрузки недельного архива: {e}")
+        logger.error(f"❌ Ошибка загрузки архива: {e}")
         return []
 
 def clear_weekly_news():
@@ -106,9 +125,7 @@ def generate_weekly_digest() -> str:
         # Добавляем хештеги
         digest += "\n\n#дайджест #тиждень #НАШАСТАЛЬ"
         
-        # Очищаем недельный архив
-        clear_weekly_news()
-        
+        # Архив НЕ очищаем — он нужен для месячного дайджеста
         return digest
         
     except Exception as e:
