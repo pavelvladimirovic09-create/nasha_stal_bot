@@ -111,7 +111,7 @@ def send_posts_immediately(posts: List[dict]):
 
 def publish_posts_batch():
     if not is_working_hours():
-        logger.info("⏰ Нерабочее время (7:00-23:00). Публикация пропущена.")
+        logger.info("⏰ Нерабочее время (7:00-22:00). Публикация пропущена.")
         return
     
     try:
