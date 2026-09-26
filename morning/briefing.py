@@ -1,6 +1,6 @@
 from morning.greeting import get_greeting
 from morning.weather import get_all_weather
-from morning.currency import get_nbu_rates, get_black_market
+from morning.currency import get_nbu_rates
 from morning.fuel import get_fuel_prices
 from morning.greeting_styler import style_morning_post, get_frame, get_morning_header
 import random
@@ -24,9 +24,7 @@ def generate_morning_post():
     # Получаем данные
     weather = get_all_weather()
     rates = get_nbu_rates()
-    black = get_black_market()
-    if not black:
-        black = get_fallback_black_market()
+    
     fuel = get_fuel_prices()
     if not fuel or not fuel.get('a95'):
         fuel = get_fallback_fuel()
@@ -42,18 +40,11 @@ def generate_morning_post():
             lines.append(f"• **{city}:** {data['temp']}, {data['description']}")
         lines.append("")
     
-    # Курсы валют
+    # Курсы валют (только НБУ)
     if rates:
         lines.append("💰 **Курси валют (НБУ):**")
         for currency, data in rates.items():
             lines.append(f"• {currency}: {data['rate']:.2f} грн")
-        lines.append("")
-    
-    # Черный рынок
-    if black:
-        lines.append("💱 **Чорний ринок:**")
-        for currency, data in black.items():
-            lines.append(f"• {currency}: купівля {data['buy']} / продаж {data['sell']}")
         lines.append("")
     
     # Топливо

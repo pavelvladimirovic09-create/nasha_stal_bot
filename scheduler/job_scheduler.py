@@ -2,14 +2,13 @@ import asyncio
 import schedule
 import time
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 from typing import Optional, List
 
 from config.settings import settings
 from utils.logger import get_logger
-from core.rss_collector import get_news, RSSCollector
+from core.rss_collector import get_news, mark_news_as_posted
 from core.news_processor import process_news
-from core.priority import sort_news_by_priority
-from core.iran_priority import is_iran_news, get_iran_priority
 from bot.post_formatter import format_post
 from bot.dispatcher import send_post_to_channel
 from morning.briefing import generate_morning_post
@@ -20,74 +19,61 @@ from post_modules.humanize import add_humanity
 logger = get_logger(__name__)
 
 _running = True
+_loop = None
 
-# Минимальный приоритет для публикации
-MIN_PRIORITY = 2
+def get_event_loop():
+    global _loop
+    if _loop is None or _loop.is_closed():
+        _loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(_loop)
+    return _loop
 
+KYIV_TZ = ZoneInfo("Europe/Kyiv")
 
-def create_posts() -> List[str]:
+def is_working_hours() -> bool:
+    now = datetime.now(KYIV_TZ)
+    hour = now.hour
+    return 7 <= hour < 23
+
+def create_posts() -> List[dict]:
     posts = []
     try:
         logger.info("📡 Сбор новостей...")
-        raw_news = get_news(limit_per_source=0)
+        raw_news = get_news(limit_per_source=5)
         
         if not raw_news:
             logger.warning("⚠️ Нет свежих новостей для публикации")
             return []
         
-        # Сначала пробуем новости об Украине
-        ukraine_news = sort_news_by_priority(raw_news)
-        high_priority_news = [item for item in ukraine_news if item.get('priority', 0) >= MIN_PRIORITY]
+        from core.priority import sort_news_by_priority
+        sorted_news = sort_news_by_priority(raw_news)
+        sorted_news = sorted_news[:1]
+        logger.info(f"📊 Отобрано {len(sorted_news)} главных новостей")
         
-        # Если нет новостей об Украине — берём новости об Иране
-        if not high_priority_news:
-            logger.info("📡 Новостей об Украине нет, ищем новости об Иране...")
-            iran_news = []
-            for item in raw_news:
-                title = item.get('title', '')
-                summary = item.get('summary', '')
-                if is_iran_news(title, summary):
-                    priority = get_iran_priority(title, summary)
-                    item['priority'] = priority
-                    item['is_iran'] = True
-                    iran_news.append(item)
-            
-            # Сортируем новости Ирана по приоритету
-            iran_news.sort(key=lambda x: x.get('priority', 0), reverse=True)
-            high_priority_news = iran_news[:7]
-            
-            if high_priority_news:
-                logger.info(f"📊 Найдено {len(high_priority_news)} новостей об Иране")
-        
-        if not high_priority_news:
-            logger.warning("⚠️ Нет релевантных новостей")
-            return []
-        
-        # Берем до 7 самых важных
-        high_priority_news = high_priority_news[:7]
-        logger.info(f"📊 Отобрано {len(high_priority_news)} главных новостей")
-        
-        for i, news_item in enumerate(high_priority_news):
+        for i, news_item in enumerate(sorted_news):
             priority = news_item.get('priority', 0)
-            is_iran = news_item.get('is_iran', False)
-            topic = "Иран" if is_iran else "Украина"
-            logger.info(f"🔄 Обработка новости {i+1}/{len(high_priority_news)} ({topic}, приоритет {priority})...")
+            logger.info(f"🔄 Обработка новости {i+1}/{len(sorted_news)} (приоритет {priority})...")
             processed = process_news(news_item)
-            image = news_item.get('image', '')
             
             if not processed:
                 logger.warning(f"⚠️ Не удалось обработать новость {i+1}")
                 continue
             
-            post = format_post(processed, include_link=False)
-            image = processed.get('image', '')
-            post = add_humanity(post, post_type="news")
+            post_text = format_post(processed, include_link=True)
+            post_text = add_humanity(post_text, post_type="news")
+            image_url = news_item.get('image', '')
             
-            collector = RSSCollector()
-            collector.mark_news_as_posted(news_item)
+            # Добавляем ссылку для отметки
+            link = news_item.get('link', '')
             
-            posts.append(post)
-            logger.info(f"✅ Пост {i+1} создан успешно ({topic}, приоритет {priority})")
+            posts.append({
+                'text': post_text,
+                'image': image_url,
+                'link': link,
+                'title': news_item.get('title', ''),
+                'source': news_item.get('source_label', '') 
+            })
+            logger.info(f"✅ Пост {i+1} создан успешно (приоритет {priority})")
         
         logger.info(f"📊 Всего создано {len(posts)} постов")
         return posts
@@ -96,57 +82,56 @@ def create_posts() -> List[str]:
         logger.error(f"❌ Ошибка при создании постов: {e}")
         return []
 
-
-def publish_post():
-    try:
-        logger.info("🕐 Запуск плановой публикации...")
-        posts = create_posts()
-        
-        if not posts:
-            logger.warning("⚠️ Нет постов для публикации")
-            return
-        
+def send_posts_immediately(posts: List[dict]):
+    if not posts:
+        return
+    
+    logger.info(f"📤 Отправка {len(posts)} постов в Telegram...")
+    
+    loop = get_event_loop()
+    
+    for i, post_data in enumerate(posts):
         try:
-            loop = asyncio.get_running_loop()
-        except RuntimeError:
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-        
-        for i, post in enumerate(posts):
-            try:
-                if loop.is_running():
-                    asyncio.create_task(send_post_to_channel(post, image))
-                else:
-                    loop.run_until_complete(send_post_to_channel(post))
-                logger.info(f"✅ Пост {i+1}/{len(posts)} отправлен на публикацию")
-                time.sleep(3)
-            except Exception as e:
-                logger.error(f"❌ Ошибка при публикации поста {i+1}: {e}")
+            loop.run_until_complete(
+                send_post_to_channel(post_data['text'], post_data['image'])
+            )
+            logger.info(f"✅ Пост {i+1}/{len(posts)} отправлен")
             
+            # Отмечаем новость как отправленную
+            if post_data.get('link'):
+                mark_news_as_posted(
+                    post_data['link'],
+                    post_data.get('title', ''),
+                    post_data.get('source', '')
+                )
+            
+            time.sleep(2)
+        except Exception as e:
+            logger.error(f"❌ Ошибка при отправке поста {i+1}: {e}")
+
+def publish_posts_batch():
+    if not is_working_hours():
+        logger.info("⏰ Нерабочее время (7:00-23:00). Публикация пропущена.")
+        return
+    
+    try:
+        logger.info("🕐 Запуск публикации...")
+        posts = create_posts()
+        if posts:
+            send_posts_immediately(posts)
+        else:
+            logger.warning("⚠️ Нет постов для публикации")
     except Exception as e:
         logger.error(f"❌ Ошибка при публикации: {e}")
 
-
 def publish_morning():
     try:
-        logger.info("🌅 Публикация утреннего дайджеста...")
-        post = generate_morning_post()
-        post = add_humanity(post, post_type="morning")
-        
-        try:
-            loop = asyncio.get_running_loop()
-            if loop.is_running():
-                asyncio.create_task(send_post_to_channel(post, image))
-            else:
-                asyncio.run(send_post_to_channel(post, image))
-            logger.info("✅ Утренний дайджест опубликован!")
-        except RuntimeError:
-            asyncio.run(send_post_to_channel(post, image))
-            logger.info("✅ Утренний дайджест опубликован!")
-            
+        logger.info("🌅 Публикация утреннего дайджеста (изображение)...")
+        from morning.briefing_with_image import publish_morning_with_image
+        publish_morning_with_image()
+        logger.info("✅ Утренний дайджест опубликован!")
     except Exception as e:
         logger.error(f"❌ Ошибка публикации утреннего дайджеста: {e}")
-
 
 def publish_weekly_digest():
     try:
@@ -154,20 +139,13 @@ def publish_weekly_digest():
         post = generate_weekly_digest()
         post = add_humanity(post, post_type="digest")
         
-        try:
-            loop = asyncio.get_running_loop()
-            if loop.is_running():
-                asyncio.create_task(send_post_to_channel(post, image))
-            else:
-                asyncio.run(send_post_to_channel(post, image))
-            logger.info("✅ Еженедельный дайджест опубликован!")
-        except RuntimeError:
-            asyncio.run(send_post_to_channel(post, image))
-            logger.info("✅ Еженедельный дайджест опубликован!")
-            
+        loop = get_event_loop()
+        loop.run_until_complete(
+            send_post_to_channel(post, image_path="templates/weekly_digest.png")
+        )
+        logger.info("✅ Еженедельный дайджест с фото опубликован!")
     except Exception as e:
         logger.error(f"❌ Ошибка публикации еженедельного дайджеста: {e}")
-
 
 def publish_monthly_digest():
     try:
@@ -175,29 +153,21 @@ def publish_monthly_digest():
         post = generate_monthly_digest()
         post = add_humanity(post, post_type="digest")
         
-        try:
-            loop = asyncio.get_running_loop()
-            if loop.is_running():
-                asyncio.create_task(send_post_to_channel(post, image))
-            else:
-                asyncio.run(send_post_to_channel(post, image))
-            logger.info("✅ Ежемесячный дайджест опубликован!")
-        except RuntimeError:
-            asyncio.run(send_post_to_channel(post, image))
-            logger.info("✅ Ежемесячный дайджест опубликован!")
-            
+        loop = get_event_loop()
+        loop.run_until_complete(send_post_to_channel(post))
+        logger.info("✅ Ежемесячный дайджест опубликован!")
     except Exception as e:
         logger.error(f"❌ Ошибка публикации ежемесячного дайджеста: {e}")
-
 
 def start_scheduler():
     global _running
     _running = True
     
-    interval = settings.POST_INTERVAL_MINUTES
-    logger.info(f"🚀 Запуск планировщика постинга (интервал: {interval} минут)")
+    get_event_loop()
     
-    schedule.every(interval).minutes.do(publish_post)
+    schedule.every(10).minutes.do(publish_posts_batch)
+    schedule.every().day.at("04:00").do(clean_cache)  # Очистка кэша каждую ночь в 3:00
+    logger.info("🚀 Запуск планировщика: 3 поста каждые 10 минут (7:00-23:00 по Киеву)")
     
     schedule.every().day.at("08:00").do(publish_morning)
     logger.info("🌅 Утренний дайджест запланирован на 8:00")
@@ -223,26 +193,19 @@ def start_scheduler():
         schedule.every().day.at("00:00").do(check_monthly)
         logger.info("📊 Ежемесячный дайджест будет проверяться ежедневно")
     
-    schedule.every(1).minutes.do(publish_post).tag("first_run")
-    
     while _running:
         schedule.run_pending()
         time.sleep(10)
-        
-        if schedule.get_jobs("first_run"):
-            for job in schedule.get_jobs("first_run"):
-                schedule.cancel_job(job)
-
 
 def stop_scheduler():
     global _running
     _running = False
     logger.info("⏹️ Планировщик остановлен")
 
-
 if __name__ == "__main__":
     from utils.logger import setup_logging
     setup_logging()
     logger.info("🧪 Тест планировщика...")
-    publish_post()
+    publish_posts_batch()
     logger.info("✅ Тест завершен")
+from scheduler.clean_cache import clean_cache

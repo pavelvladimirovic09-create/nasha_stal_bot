@@ -15,7 +15,7 @@ from aiogram.filters import Command
 
 from config.settings import settings
 from utils.logger import setup_logging, get_logger
-from scheduler.job_scheduler import publish_post, start_scheduler, stop_scheduler
+from scheduler.job_scheduler import publish_posts_batch, start_scheduler, stop_scheduler
 
 setup_logging()
 logger = get_logger(__name__)
@@ -56,7 +56,7 @@ async def cmd_post(message: types.Message):
     await message.answer("🔄 Починаю публікацію новини...")
     try:
         loop = asyncio.get_event_loop()
-        await loop.run_in_executor(None, publish_post)
+        await loop.run_in_executor(None, publish_posts_batch)
         await message.answer("✅ Новини опубліковано!")
     except Exception as e:
         logger.error(f"❌ Ошибка при публикации: {e}")

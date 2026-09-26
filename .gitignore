@@ -1,3 +1,25 @@
 venv/
+__pycache__/
+*.pyc
+*.pyo
+*.log
+logs/
 .env
-venv/
+
+# Data files (runtime)
+posted_links.json
+posted_links.json.bak*
+weekly_news.json
+data/posted_links.json
+
+# Backups
+*.bak
+*.bak_*
+*.bak2
+*.bak3
+*.py.bak
+
+# Systemd logs
+logs/systemd.log
+logs/systemd.err.log
+templates/weekly_digest.png

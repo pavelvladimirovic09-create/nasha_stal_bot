@@ -16,12 +16,15 @@ UKRAINE_SOURCES = {
 UK_SOURCES = {
     "bbc_uk": "https://feeds.bbci.co.uk/news/world/rss.xml",
     "guardian": "https://www.theguardian.com/uk/rss",
+    "sky_news": "https://feeds.skynews.com/feeds/rss/home.xml",
 }
 
 # Европейские источники
 EU_SOURCES = {
     "dw": "https://rss.dw.com/rdf/rss-en-all",
     "aljazeera": "https://www.aljazeera.com/xml/rss/all.xml",
+    "france24": "https://www.france24.com/en/rss",
+    "lemonde": "https://www.lemonde.fr/rss/une.xml",
 }
 
 # Американские источники
@@ -31,6 +34,8 @@ US_SOURCES = {
     "cnbc": "https://www.cnbc.com/id/100003114/device/rss/rss.html",
     "abc": "http://feeds.abcnews.com/abcnews/topstories",
     "nbc": "http://feeds.nbcnews.com/feeds/worldnews",
+    "apnews": "https://apnews.com/hub/ap-top-news?format=rss",
+    "washington_post": "https://feeds.washingtonpost.com/rss/world",
 }
 
 # Китайские источники
@@ -62,6 +67,6 @@ def get_source_categories():
 if __name__ == "__main__":
     print("📡 Источники по категориям:")
     for category, sources in get_source_categories().items():
-        print(f"\n{category}:")
+        print(f"\n{category} ({len(sources)} источников):")
         for name, url in sources.items():
             print(f"  {name}: {url}")

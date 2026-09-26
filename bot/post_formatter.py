@@ -1,20 +1,18 @@
-from typing import Dict
-from datetime import datetime
-
+from typing import Dict, Optional
+import re
 
 class PostFormatter:
-    """Форматировщик постов с флагом страны"""
+    """Форматирует новости для публикации в Telegram"""
     
-    # Флаги для источников
     SOURCE_FLAGS = {
         'tsn': '🇺🇦',
         'bbc_ukraine': '🇬🇧',
         'bbc_uk': '🇬🇧',
-        'unian': '🇺🇦',
+        'unian_eng': '🇺🇦',
+        'unian_rus': '🇺🇦',
         'dw': '🇩🇪',
         'guardian': '🇬🇧',
         'aljazeera': '🇶🇦',
-        'bellingcat': '🇳🇱',
         'npr': '🇺🇸',
         'cnn': '🇺🇸',
         'cnbc': '🇺🇸',
@@ -22,54 +20,85 @@ class PostFormatter:
         'nbc': '🇺🇸',
         'chinadaily': '🇨🇳',
         'ukrinform': '🇺🇦',
-        'cgtn': '🇨🇳',
-        'rada': '🇺🇦'
+        'glavred': '🇺🇦',
+        'pravda': '🇺🇦',
+        'sky_news': '🇬🇧',
+        'apnews': '🇺🇸',
+        'washington_post': '🇺🇸',
+        'france24': '🇫🇷',
+        'lemonde': '🇫🇷',
     }
+    
+    SOURCE_LABELS = {
+        'tsn': 'TSN.ua',
+        'bbc_ukraine': 'BBC Україна',
+        'bbc_uk': 'BBC UK',
+        'unian_eng': 'UNIAN (англ.)',
+        'unian_rus': 'УНІАН (рос.)',
+        'dw': 'Deutsche Welle',
+        'guardian': 'The Guardian',
+        'aljazeera': 'Al Jazeera',
+        'npr': 'NPR',
+        'cnn': 'CNN',
+        'cnbc': 'CNBC',
+        'abc': 'ABC News',
+        'nbc': 'NBC',
+        'chinadaily': 'China Daily',
+        'ukrinform': 'Укрінформ',
+        'glavred': 'Glavred',
+        'pravda': 'Українська правда',
+        'sky_news': 'Sky News',
+        'apnews': 'AP News',
+        'washington_post': 'Washington Post',
+        'france24': 'France 24',
+        'lemonde': 'Le Monde',
+    }
+    
+    def __init__(self):
+        self.flags = self.SOURCE_FLAGS
+        self.labels = self.SOURCE_LABELS
     
     def _get_flag(self, source: str) -> str:
-        """Возвращает флаг для источника"""
-        return self.SOURCE_FLAGS.get(source, '🌍')
+        return self.flags.get(source, '🌍')
     
-    def format_post(self, processed_news: Dict) -> str:
-        """Форматирует пост с флагом страны"""
-        title = processed_news.get('title', 'Новина без заголовка')
-        summary = processed_news.get('summary', 'Опис відсутній')
-        importance = processed_news.get('importance', 'Без коментарів')
-        tags = processed_news.get('tags', ['новини'])
+    def _get_label(self, source: str) -> str:
+        return self.labels.get(source, source)
+    
+    def format_post(self, processed_news: Dict, include_link: bool = True) -> str:
+        title = processed_news.get('title', 'Без заголовка')
+        summary = processed_news.get('summary', '')
         source = processed_news.get('source', 'unknown')
+        link = processed_news.get('link', '')
         
-        # Получаем флаг
         flag = self._get_flag(source)
+        label = self._get_label(source)
         
-        # Формируем пост с флагом
-        post = (
-            f"{flag}\n\n"
-            f"🔥 {title}\n\n"
-            f"💬 {summary}\n\n"
-            f"❗ {importance}\n\n"
-            f"#{' #'.join(tags[:3])}"
-        )
-        return post
+        lines = []
+        lines.append(f"{flag} **{label}**")
+        lines.append("")
+        lines.append(f"📰 **{title}**")
+        lines.append("")
+        
+        if summary:
+            # Очищаем summary от лишних пробелов
+            clean_summary = ' '.join(summary.split())
+            lines.append(clean_summary)
+            lines.append("")
+        
+        if include_link and link:
+            lines.append(f"🔗 [Читати далі]({link})")
+        
+        return "\n".join(lines)
 
-
-def format_post(processed_news: Dict, include_link: bool = False) -> str:
+def format_post(processed_news: Dict, include_link: bool = True) -> str:
     formatter = PostFormatter()
-    return formatter.format_post(processed_news)
-
-
-def test_formatter():
-    print("🧪 Тест форматировщика с флагом...")
-    test_news = {
-        'source': 'tsn',
-        'title': 'ЗСУ зупинили наступ на Донбасі',
-        'summary': 'Українські військові відбили атаку. Ворог втратив техніку.',
-        'importance': 'Це змінює ситуацію на фронті.',
-        'tags': ['фронт', 'донбас', 'зсу']
-    }
-    print("\n" + "="*50)
-    print(format_post(test_news))
-    print("="*50)
-
+    return formatter.format_post(processed_news, include_link)
 
 if __name__ == "__main__":
-    test_formatter()
+    test_news = {
+        'title': 'Тестова новина',
+        'summary': 'Це тестовий опис новини.',
+        'source': 'tsn',
+        'link': 'https://test.ua'
+    }
+    print(format_post(test_news))
