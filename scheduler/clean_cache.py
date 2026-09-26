@@ -102,4 +102,6 @@ def clean_cache():
 
 
 if __name__ == "__main__":
+    from utils.logger import setup_logging
+    setup_logging()
     clean_cache()

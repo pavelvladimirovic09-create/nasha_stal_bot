@@ -166,7 +166,7 @@ def start_scheduler():
     get_event_loop()
     
     schedule.every(10).minutes.do(publish_posts_batch)
-    schedule.every().day.at("04:00").do(clean_cache)  # Очистка кэша каждую ночь в 3:00
+    schedule.every().day.at("04:00").do(clean_cache)  # Очистка кэша каждую ночь в 04:00 UTC (07:00 Киев)
     logger.info("🚀 Запуск планировщика: 1 пост каждые 10 минут (7:00-22:00 по Киеву)")
     
     schedule.every().day.at("05:00").do(publish_morning)
