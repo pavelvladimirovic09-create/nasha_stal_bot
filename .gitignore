@@ -1,24 +1,25 @@
-venv/
+# Python
 __pycache__/
 *.pyc
 *.pyo
-*.log
-logs/
+*.bak*
+venv/
+
+# Secrets
 .env
 
-# Data files (runtime)
+# Logs
+logs/
+*.log
+
+# Runtime data
 posted_links.json
-posted_links.json.bak*
 weekly_news.json
-data/posted_links.json
+data/
 
-# Backups
-*.bak
-*.bak_*
-*.bak*
-*.py.bak
+# OS
+.DS_Store
+Thumbs.db
 
-# Systemd logs
-logs/systemd.log
-logs/systemd.err.log
+# Templates (генерируемые)
 templates/weekly_digest.png

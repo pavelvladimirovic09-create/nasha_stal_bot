@@ -154,8 +154,10 @@ def publish_monthly_digest():
         post = add_humanity(post, post_type="digest")
         
         loop = get_event_loop()
-        loop.run_until_complete(send_post_to_channel(post))
-        logger.info("✅ Ежемесячный дайджест опубликован!")
+        loop.run_until_complete(
+            send_post_to_channel(post, image_path="templates/weekly_digest.png")
+        )
+        logger.info("✅ Ежемесячный дайджест с фото опубликован!")
     except Exception as e:
         logger.error(f"❌ Ошибка публикации ежемесячного дайджеста: {e}")
 
