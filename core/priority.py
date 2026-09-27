@@ -198,7 +198,7 @@ def sort_news_by_priority(news_list: list) -> list:
         title = item.get('title', '')
         summary = item.get('summary', '')
         source = item.get('source', '')
-        priority = calculate_priority(title, summary, source)
+        priority = calculate_priority(title, summary)
         
         if priority > 0:
             item['priority'] = priority
