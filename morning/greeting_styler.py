@@ -5,6 +5,9 @@
 
 import random
 from datetime import datetime
+from zoneinfo import ZoneInfo
+
+KYIV_TZ = ZoneInfo("Europe/Kyiv")
 
 # Стильные рамки
 FRAMES = [
@@ -54,7 +57,7 @@ def get_greeting() -> str:
 
 def get_date_line() -> str:
     """Возвращает красивую строку с датой"""
-    today = datetime.now()
+    today = datetime.now(KYIV_TZ)
     return today.strftime("📅 %d.%m.%Y")
 
 
@@ -64,7 +67,7 @@ def get_weekday() -> str:
         "Понеділок", "Вівторок", "Середа",
         "Четвер", "П'ятниця", "Субота", "Неділя"
     ]
-    return weekdays[datetime.now().weekday()]
+    return weekdays[datetime.now(KYIV_TZ).weekday()]
 
 
 def style_block(title: str, content: str, emoji: str = "•") -> str:

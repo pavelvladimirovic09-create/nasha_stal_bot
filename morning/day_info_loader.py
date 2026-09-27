@@ -1,4 +1,5 @@
 from datetime import datetime
+from zoneinfo import ZoneInfo
 from typing import Dict, Optional
 from morning.day_info.names import NAMES_DB
 from morning.day_info.events import EVENTS_DB
@@ -6,13 +7,14 @@ from morning.day_info.births import BIRTHS_DB
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
+KYIV_TZ = ZoneInfo("Europe/Kyiv")
 
 def get_day_info(date: Optional[datetime] = None) -> Dict:
     """
     Возвращает информацию о дне из ручной базы данных
     """
     if date is None:
-        date = datetime.now()
+        date = datetime.now(KYIV_TZ)
     
     key = date.strftime("%m-%d")
     

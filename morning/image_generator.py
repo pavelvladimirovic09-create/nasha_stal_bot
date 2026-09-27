@@ -1,5 +1,8 @@
 from PIL import Image, ImageDraw, ImageFont
 from datetime import datetime
+from zoneinfo import ZoneInfo
+
+KYIV_TZ = ZoneInfo("Europe/Kyiv")
 import os
 from morning.blue_section import draw_blue_section
 from morning.yellow_section import draw_yellow_section
@@ -67,16 +70,28 @@ def get_all_data():
                 'sell': data.get('sell', '')
             })
     
-    # Топливо
+    # Топливо — берём среднее по 3 городам (Київ, Одеса, Львів)
     fuel_raw = get_fuel_prices()
     fuel_data = {'fuels': []}
     if fuel_raw:
-        fuel_map = {'a95': 'А-95', 'a92': 'А-92', 'dt': 'Дизель', 'gas': 'Автогаз'}
-        for key, name in fuel_map.items():
-            if key in fuel_raw:
+        # fuel_raw = {'Київ': {'a95': '88.86', 'dt': ..., 'gas': ...}, ...}
+        fuel_keys = ['a95', 'dt', 'gas']       # только нужные (без a92)
+        fuel_names = {'a95': 'А-95', 'dt': 'Дизель', 'gas': 'Автогаз'}
+
+        for key in fuel_keys:
+            prices = []
+            for city, city_data in fuel_raw.items():
+                val = city_data.get(key)
+                if val:
+                    try:
+                        prices.append(float(val))
+                    except (ValueError, TypeError):
+                        pass
+            if prices:
+                avg = sum(prices) / len(prices)
                 fuel_data['fuels'].append({
-                    'name': name,
-                    'price': fuel_raw[key]
+                    'name': fuel_names[key],
+                    'price': f"{avg:.2f}"
                 })
     
     # Дата
@@ -92,13 +107,13 @@ def get_all_data():
         'Saturday': 'Субота', 'Sunday': 'Неділя'
     }
     
-    now = datetime.now()
+    now = datetime.now(KYIV_TZ)
     day_num = now.strftime('%d')
     month = months_ua.get(now.strftime('%B'), now.strftime('%B'))
     year = now.strftime('%Y')
     date_str = f"{day_num} {month} {year}"
     day_str = days_ua.get(now.strftime('%A'), now.strftime('%A'))
-    war_day = f"{1000 + (now - datetime(2022, 2, 24)).days}-й день війни"
+    war_day = f"{(now - datetime(2022, 2, 24, tzinfo=KYIV_TZ)).days}-й день війни"
     
     return {
         'weather': weather_data,
