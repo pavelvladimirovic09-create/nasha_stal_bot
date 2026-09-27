@@ -1,6 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+import json
+from datetime import datetime
+from zoneinfo import ZoneInfo
 from typing import Dict, Optional
 import sys
 import os
@@ -8,6 +11,38 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
+
+KYIV_TZ = ZoneInfo("Europe/Kyiv")
+CACHE_FILE = "data/fuel_last.json"
+
+
+def _save_cache(prices: Dict):
+    """Сохраняет успешно спарсенные цены в кеш"""
+    try:
+        os.makedirs(os.path.dirname(CACHE_FILE), exist_ok=True)
+        with open(CACHE_FILE, 'w') as f:
+            json.dump({
+                "prices": prices,
+                "saved_at": datetime.now(KYIV_TZ).strftime("%Y-%m-%d %H:%M")
+            }, f, ensure_ascii=False, indent=2)
+        logger.info(f"💾 Цены сохранены в кеш ({CACHE_FILE})")
+    except Exception as e:
+        logger.error(f"❌ Ошибка сохранения кеша топлива: {e}")
+
+
+def _load_cache() -> Optional[Dict]:
+    """Читает последние успешные цены из кеша"""
+    if not os.path.exists(CACHE_FILE):
+        return None
+    try:
+        with open(CACHE_FILE, 'r') as f:
+            data = json.load(f)
+        saved_at = data.get('saved_at', '?')
+        logger.warning(f"⚠️ Использую кеш топлива от {saved_at}")
+        return data.get('prices')
+    except Exception as e:
+        logger.error(f"❌ Ошибка чтения кеша топлива: {e}")
+        return None
 
 def get_fuel_prices_for_display() -> Optional[Dict]:
     """
@@ -70,8 +105,9 @@ def get_fuel_prices_for_display() -> Optional[Dict]:
                             continue
         
         if fuel_data:
-            # Если есть все три города - возвращаем
+            # Если есть все три города - сохраняем в кеш и возвращаем
             if 'Київ' in fuel_data and 'Одеса' in fuel_data and 'Львів' in fuel_data:
+                _save_cache(fuel_data)
                 return fuel_data
             else:
                 # Дополняем недостающие города данными из Киева
@@ -80,14 +116,17 @@ def get_fuel_prices_for_display() -> Optional[Dict]:
                         if city not in fuel_data:
                             fuel_data[city] = fuel_data['Київ'].copy()
                             logger.info(f"⚠️ {city}: скопировано из Киева")
+                    _save_cache(fuel_data)
                     return fuel_data
         
         logger.warning("⚠️ Не удалось найти цены на auto.ria.com")
-        return None
+        # Fallback: читаем из кеша
+        return _load_cache()
         
     except Exception as e:
         logger.error(f"❌ Ошибка парсинга auto.ria.com: {e}")
-        return None
+        # Fallback: читаем из кеша
+        return _load_cache()
 
 def get_fuel_prices() -> Optional[Dict]:
     """
