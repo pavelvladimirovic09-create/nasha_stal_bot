@@ -7,7 +7,7 @@ from typing import Optional, List
 
 from config.settings import settings
 from utils.logger import get_logger
-from core.rss_collector import get_news, mark_news_as_posted
+from core.rss_collector import get_news, mark_news_as_posted, pick_next_by_rotation
 from core.news_processor import process_news
 from bot.post_formatter import format_post
 from bot.dispatcher import send_post_to_channel
@@ -47,8 +47,11 @@ def create_posts() -> List[dict]:
         
         from core.priority import sort_news_by_priority
         sorted_news = sort_news_by_priority(raw_news)
-        sorted_news = sorted_news[:1]
-        logger.info(f"📊 Отобрано {len(sorted_news)} главных новостей")
+        sorted_news = pick_next_by_rotation(sorted_news)
+        if not sorted_news:
+            logger.warning("⚠️ Round-robin: нет подходящей новости — пропуск цикла")
+            return []
+        logger.info(f"📊 Выбран источник: {sorted_news[0].get('source')} (priority 5)")
         
         for i, news_item in enumerate(sorted_news):
             priority = news_item.get('priority', 0)

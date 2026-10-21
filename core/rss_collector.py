@@ -171,3 +171,46 @@ def save_weekly_news(link: str, title: str = '', source: str = ''):
             json.dump(weekly, f, ensure_ascii=False, indent=2)
     except Exception as e:
         logger.error(f"❌ Ошибка сохранения в недельный архив: {e}")
+
+def pick_next_by_rotation(sorted_news: list) -> list:
+    """Возвращает 1 новость по round-robin (по очереди источников).
+    Если у текущего источника нет priority 5 — идёт к следующему.
+    Состояние: data/source_rotation.json
+    """
+    if not sorted_news:
+        return []
+
+    ROTATION_FILE = "data/source_rotation.json"
+    SOURCE_ORDER = list(SOURCES.keys())
+
+    last_source = None
+    try:
+        if os.path.exists(ROTATION_FILE):
+            with open(ROTATION_FILE, 'r') as f:
+                data = json.load(f)
+                last_source = data.get('last_source')
+    except Exception as e:
+        logger.error(f"❌ Ошибка чтения rotation: {e}")
+
+    start_idx = 0
+    if last_source in SOURCE_ORDER:
+        start_idx = (SOURCE_ORDER.index(last_source) + 1) % len(SOURCE_ORDER)
+
+    for offset in range(len(SOURCE_ORDER)):
+        idx = (start_idx + offset) % len(SOURCE_ORDER)
+        source_name = SOURCE_ORDER[idx]
+
+        for news in sorted_news:
+            if news.get('source') == source_name:
+                try:
+                    os.makedirs(os.path.dirname(ROTATION_FILE), exist_ok=True)
+                    with open(ROTATION_FILE, 'w') as f:
+                        json.dump({'last_source': source_name}, f)
+                except Exception as e:
+                    logger.error(f"❌ Ошибка записи rotation: {e}")
+
+                logger.info(f"🔄 Round-robin: выбран источник {source_name}")
+                return [news]
+
+    logger.warning("⚠️ Round-robin: нет новостей с priority 5 ни у одного источника")
+    return []
